@@ -1,0 +1,26 @@
+{% extends 'base_tailwind.html' %}
+{% block title %}Clientes{% endblock %}
+{% block content %}
+<a href="{{ url_for('create_customer') }}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">Novo Cliente</a>
+<table class="w-full table-auto bg-white shadow-md rounded">
+  <thead class="bg-gray-200">
+    <tr>
+      <th class="px-4 py-2">Nome</th>
+      <th class="px-4 py-2">Email</th>
+      <th class="px-4 py-2">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in customers %}
+    <tr class="border-t">
+      <td class="px-4 py-2">{{ c[1] }}</td>
+      <td class="px-4 py-2">{{ c[2] }}</td>
+      <td class="px-4 py-2">
+        <a href="{{ url_for('edit_customer', customer_id=c[0]) }}" class="text-blue-500">Editar</a> |
+        <a href="{{ url_for('delete_customer', customer_id=c[0]) }}" class="text-red-500">Deletar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

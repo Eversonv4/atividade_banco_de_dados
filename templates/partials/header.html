@@ -1,0 +1,13 @@
+<header class="bg-gray-800 text-white p-4 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-xl font-bold">
+      <a href="{{ url_for('home') }}">Sistema de Pedidos</a>
+    </h1>
+    <nav class="space-x-4">
+      <a href="{{ url_for('list_products') }}" class="hover:text-yellow-300">Produtos</a>
+      <a href="{{ url_for('list_categories') }}" class="hover:text-yellow-300">Categorias</a>
+      <a href="{{ url_for('list_customers') }}" class="hover:text-yellow-300">Clientes</a>
+      <a href="{{ url_for('list_order_items') }}" class="hover:text-yellow-300">Fazer pedido</a>
+    </nav>
+  </div>
+</header>

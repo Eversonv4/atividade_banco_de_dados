@@ -1,0 +1,26 @@
+{% extends 'base_tailwind.html' %}
+{% block title %}Pedidos{% endblock %}
+{% block content %}
+<a href="{{ url_for('create_order') }}" class="bg-purple-600 text-white px-4 py-2 rounded mb-4 inline-block">Novo Pedido</a>
+<table class="w-full table-auto bg-white shadow-md rounded">
+  <thead class="bg-gray-200">
+    <tr>
+      <th class="px-4 py-2">Cliente</th>
+      <th class="px-4 py-2">Data</th>
+      <th class="px-4 py-2">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for o in orders %}
+    <tr class="border-t">
+      <td class="px-4 py-2">{{ o[1] }}</td>
+      <td class="px-4 py-2">{{ o[2] }}</td>
+      <td class="px-4 py-2">
+        <a href="{{ url_for('edit_order', order_id=o[0]) }}" class="text-blue-500">Editar</a> |
+        <a href="{{ url_for('delete_order', order_id=o[0]) }}" class="text-red-500">Deletar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base_tailwind.html' %}
+{% block title %}Produtos{% endblock %}
+{% block content %}
+<a href="{{ url_for('create_product') }}" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">Novo Produto</a>
+<table class="w-full table-auto bg-white shadow-md rounded">
+  <thead class="bg-gray-200">
+    <tr>
+      <th class="px-4 py-2">Nome</th>
+      <th class="px-4 py-2">Preço</th>
+      <th class="px-4 py-2">Categoria</th>
+      <th class="px-4 py-2">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr class="border-t">
+      <td class="px-4 py-2">{{ p[1] }}</td>
+      <td class="px-4 py-2">R$ {{ p[2] }}</td>
+      <td class="px-4 py-2">{{ p[3] or 'Sem categoria' }}</td>
+      <td class="px-4 py-2">
+        <a href="{{ url_for('edit_product', product_id=p[0]) }}" class="text-blue-500">Editar</a> |
+        <a href="{{ url_for('delete_product', product_id=p[0]) }}" class="text-red-500">Deletar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
