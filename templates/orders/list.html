@@ -8,6 +8,8 @@
       <th class="px-4 py-2">ID</th>
       <th class="px-4 py-2">Cliente</th>
       <th class="px-4 py-2">Data</th>
+      <th class="px-4 py-2">Total</th>
+      <th class="px-4 py-2">Status</th>
       <th class="px-4 py-2">Ações</th>
     </tr>
   </thead>
@@ -17,10 +19,16 @@
       <td class="px-4 py-2">#{{ o[0] }}</td>
       <td class="px-4 py-2">{{ o[1] }}</td>
       <td class="px-4 py-2">{{ o[2] }}</td>
+      <td class="px-4 py-2">R$ {{ o[3] if o[3] else 0 }}</td>
+      <td class="px-4 py-2">{{ "Finalizado" if o[4] == 1 else "Aberto" }}</td>
       <td class="px-4 py-2">
-        <a href="{{ url_for('list_order_items', order_id=o[0]) }}" class="text-blue-500">Ver completo</a> |
+        <a href="{{ url_for('list_order_items', order_id=o[0]) }}" class="text-blue-500">Ver completo</a>
+        {% if o[4] == 0 %}
+        |
         <a href="{{ url_for('edit_order', order_id=o[0]) }}" class="text-blue-500">Editar</a> |
-        <a href="{{ url_for('delete_order', order_id=o[0]) }}" class="text-red-500">Deletar</a>
+        <a href="{{ url_for('conclude_order', order_id=o[0]) }}" class="text-green-500">Concluir</a> |
+        <a href="{{ url_for('delete_order', order_id=o[0]) }}" class="text-red-500">Cancelar</a>
+        {% endif %}
       </td>
     </tr>
     {% endfor %}
