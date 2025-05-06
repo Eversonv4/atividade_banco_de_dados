@@ -220,33 +220,33 @@ def list_order_items(order_id):
             WHERE order_items.order_id = {0}
         '''.format(order_id))
         order_items = cur.fetchall()
-    return render_template('order_items/list.html', order_items=order_items)
+    return render_template('order_items/list.html', order_items=order_items, order_id=order_id)
 
-@app.route('/order_items/create', methods=['GET', 'POST'])
-def create_order_item():
+@app.route('/order_items/<int:order_id>/create', methods=['GET', 'POST'])
+def create_order_item(order_id):
     with sqlite3.connect(DATABASE) as conn:
         cur = conn.cursor()
 
         if request.method == 'POST':
-            order_id = request.form.get('order_id')
-
-            if not order_id:
+            order_id_post = request.form.get('order_id_post')
+            print(order_id_post)
+            if not order_id_post:
                 order_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                order_id = cur.lastrowid
+                order_id_post = cur.lastrowid
 
             product_id = request.form['product_id']
             quantity = request.form['quantity']
             cur.execute('INSERT INTO order_items (order_id, product_id, quantity) VALUES (?, ?, ?)',
-                        (order_id, product_id, quantity))
+                        (order_id_post, product_id, quantity))
             conn.commit()
-            return redirect(url_for('list_order_items'))
+            return redirect(url_for('list_order_items', order_id=order_id_post))
 
         cur.execute('SELECT id, customer_id, order_date FROM orders')
         orders = cur.fetchall()
 
         cur.execute('SELECT id, name FROM products')
         products = cur.fetchall()
-    return render_template('order_items/create.html', orders=orders, products=products, order_item=None)
+    return render_template('order_items/create.html', orders=orders, products=products, order_item=None, order_id=order_id)
 
 @app.route('/order_items/<int:item_id>/edit', methods=['GET', 'POST'])
 def edit_order_item(item_id):
