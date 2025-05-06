@@ -209,15 +209,16 @@ def delete_order(order_id):
 # ----------------------------------------
 # ROUTES FOR ORDER ITEMS
 # ----------------------------------------
-@app.route('/order_items')
-def list_order_items():
+@app.route('/order_items/<int:order_id>/list', methods=['GET', 'POST'])
+def list_order_items(order_id):
     with sqlite3.connect(DATABASE) as conn:
         cur = conn.cursor()
         cur.execute('''
             SELECT order_items.id, order_items.order_id, products.name, order_items.quantity
             FROM order_items
             LEFT JOIN products ON order_items.product_id = products.id
-        ''')
+            WHERE order_items.order_id = {0}
+        '''.format(order_id))
         order_items = cur.fetchall()
     return render_template('order_items/list.html', order_items=order_items)
 
