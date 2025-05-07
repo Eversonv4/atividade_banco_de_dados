@@ -2,11 +2,8 @@
 {% block title %}{{ 'Editar' if order_item else 'Novo' }} Item do Pedido{% endblock %}
 {% block content %}
 <form method="post" class="bg-white p-6 rounded shadow-md">
-  <label class="block mb-2">Pedido</label>
-  <select name="order_id" class="w-full p-2 border mb-4" required>
-    <option value="">Novo pedido</option>
-  </select>
-
+  <input type="hidden" name="order_id_post" value="{{ order_id }}">
+  
   <label class="block mb-2">Produto</label>
   <select name="product_id" class="w-full p-2 border mb-4" required>
     {% for p in products %}

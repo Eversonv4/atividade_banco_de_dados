@@ -9,9 +9,6 @@
     {% endfor %}
   </select>
 
-  <label class="block mb-2">Data</label>
-  <input type="date" name="order_date" class="w-full p-2 border mb-4" value="{{ order[2] if order else '' }}" required>
-
   <button class="bg-purple-600 text-white px-4 py-2 rounded">Salvar</button>
 </form>
 {% endblock %}
