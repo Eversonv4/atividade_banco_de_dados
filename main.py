@@ -265,7 +265,17 @@ def list_order_items(order_id):
 def create_order_item(order_id):
     with sqlite3.connect(DATABASE) as conn:
         cur = conn.cursor()
-
+        
+        # Checks if the order was already concluded, to not allow it to be edited if it was
+        cur.execute('''SELECT purchase_done
+                    FROM orders AS o
+                    WHERE o.id = {0}
+                    '''.format(order_id));
+        purchase_done = cur.fetchone()
+        if purchase_done[0] == 1:
+            return redirect(url_for('list_orders'))
+        
+        
         if request.method == 'POST':
             order_id_post = request.form.get('order_id_post')
             print(order_id_post)

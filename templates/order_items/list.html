@@ -1,7 +1,9 @@
 {% extends 'base_tailwind.html' %}
 {% block title %}Itens do Pedido{% endblock %}
 {% block content %}
+{% if order_status == 0 %}
 <a href="{{ url_for('create_order_item', order_id=order_id) }}" class="bg-indigo-600 text-white px-4 py-2 rounded mb-4 inline-block">Adicionar Item</a>
+{% endif %}
 <table class="w-full table-auto bg-white shadow-md rounded">
   <thead class="bg-gray-200">
     <tr>
