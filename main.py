@@ -291,6 +291,19 @@ def create_order_item(order_id):
 def edit_order_item(item_id):
     with sqlite3.connect(DATABASE) as conn:
         cur = conn.cursor()
+        
+        # Checks if the order was already concluded, to not allow it to be edited if it was
+        cur.execute('''SELECT purchase_done, o.id 
+                    FROM order_items AS orit
+                    INNER JOIN orders AS o
+                    ON orit.order_id = o.id
+                    WHERE orit.id = {0}
+                    '''.format(item_id));
+        purchase_done = cur.fetchone()
+        if purchase_done[0] == 1:
+            return redirect(url_for('list_orders'))
+        
+        
         if request.method == 'POST':
             cur.execute('''SELECT order_id
                         FROM order_items 
